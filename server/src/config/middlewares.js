@@ -4,12 +4,15 @@ import { ApolloServer } from 'apollo-server-express';
 import typeDefs from '../graphql/schema';
 import resolvers from '../graphql/resolvers';
 import { decodeToken } from '../services/auth.js';
-import graphql from 'graphql'
+import graphql from 'graphql';
 
-const server = new ApolloServer({ typeDefs, resolvers, context: ({req, res}) => ({
-    user: req.user
-
-  }) });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ req, res }) => ({
+    user: req.user,
+  }),
+});
 
 async function auth(req, res, next) {
   try {

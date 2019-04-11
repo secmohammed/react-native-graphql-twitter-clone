@@ -9,7 +9,7 @@ mongoose.Promise = global.Promise;
 mongoose.set('debug', true); // debug mode on
 
 try {
-  mongoose.connect(constants.DB_URL, { useNewUrlParser: true });
+  mongoose.connect(constants.DB_URL, { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false });
 } catch (err) {
   mongoose.createConnection(constants.DB_URL);
 }

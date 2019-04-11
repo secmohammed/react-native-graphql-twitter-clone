@@ -28,7 +28,7 @@ export default {
       }
 
       return {
-        token: user.createToken()
+        token: user.createToken(),
       };
     } catch (error) {
       throw error;

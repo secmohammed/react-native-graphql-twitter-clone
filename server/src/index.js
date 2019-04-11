@@ -12,11 +12,11 @@ const app = express();
 middlewares(app);
 
 // mocks().then(() => {
-  app.listen(constants.PORT, err => {
-    if (err) {
-      console.error(err);
-    } else {
-      console.log(`App listen to port: ${constants.PORT}`);
-    }
-  });
+app.listen(constants.PORT, err => {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log(`App listen to port: ${constants.PORT}`);
+  }
+});
 // });

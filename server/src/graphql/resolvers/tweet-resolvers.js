@@ -12,7 +12,7 @@ export default {
   },
   getTweets: async (_, args, { user }) => {
     try {
-      return await Tweet.find({}).sort({ createdAt: -1 })
+      return await Tweet.find({}).sort({ createdAt: -1 });
     } catch (error) {
       throw error;
     }
@@ -20,7 +20,7 @@ export default {
   getUserTweets: async (_, args, { user }) => {
     try {
       await requireAuth(user);
-      return Tweet.find({ user: user._id }).sort({ createdAt: -1 })
+      return Tweet.find({ user: user._id }).sort({ createdAt: -1 });
     } catch (error) {
       throw error;
     }
@@ -61,10 +61,10 @@ export default {
       }
       await tweet.remove();
       return {
-        message: 'Delete Success!'
-      }
+        message: 'Delete Success!',
+      };
     } catch (error) {
       throw error;
     }
-  }
+  },
 };
