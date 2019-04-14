@@ -1,28 +1,27 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Provider } from "react-redux";
-import { store, persistor } from "./src/store";
+import { store, persistor, client } from "./src/store";
 import { PersistGate } from 'redux-persist/integration/react'
+import { colors } from './src/utils/constants';
+import { ApolloProvider } from 'react-apollo';
+import { UIManager } from 'react-native'
+import { ThemeProvider } from 'styled-components';
+import HomeScreen from './src/screens/HomeScreen'
 
+if(UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 export default class App extends Component {
   render() {
     return (
-      <Provider store={store}>
+      <ApolloProvider client={client}>
         <PersistGate loading={null} persistor={persistor}>
-          <View style={styles.container}>
-            <Text>Open up App.js to start working on my app!</Text>
-          </View>
+          <ThemeProvider theme={colors}>
+            <HomeScreen />
+          </ThemeProvider>
         </PersistGate>
-      </Provider>
+      </ApolloProvider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
