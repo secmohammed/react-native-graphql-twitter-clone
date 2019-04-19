@@ -47,7 +47,7 @@ const FeedCardButton = (props) => {
         <Button>
             <Entypo name="heart" size={ICON_SIZE} color={isFavorited ? 'red' : colors.LIGHT_GRAY} />
             <ButtonText>
-                {favoriteCount}
+                {props.favoriteCount}
             </ButtonText>
         </Button>
     </Root>

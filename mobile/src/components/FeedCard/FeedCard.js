@@ -31,13 +31,13 @@ const text = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit ut r
 const FeedCard = (props) =>  {
     return (
         <Root>
-            <FeedCardHeader />
+            <FeedCardHeader createdAt={props.createdAt} {...props.user} />
             <CardContentContainer>
                 <CardContentText>
-                    {text}
+                    {props.text}
                 </CardContentText>
             </CardContentContainer>
-            <FeedCardButton />
+            <FeedCardButton favoriteCount={props.favoriteCount} />
 
         </Root>
     );

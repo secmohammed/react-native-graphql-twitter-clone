@@ -7,7 +7,7 @@ import { colors } from './src/utils/constants';
 import { ApolloProvider } from 'react-apollo';
 import { UIManager } from 'react-native'
 import { ThemeProvider } from 'styled-components';
-import HomeScreen from './src/screens/HomeScreen'
+import AppNavigator from './src/navigation.js'
 
 if(UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -18,7 +18,7 @@ export default class App extends Component {
       <ApolloProvider client={client}>
         <PersistGate loading={null} persistor={persistor}>
           <ThemeProvider theme={colors}>
-            <HomeScreen />
+            <AppNavigator />
           </ThemeProvider>
         </PersistGate>
       </ApolloProvider>

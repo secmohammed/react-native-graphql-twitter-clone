@@ -50,30 +50,26 @@ const MetaFullName = styled.Text`
     fontWeight: bold;
     color: ${props => props.theme.SECONDARY};
 `
-const username = 'secmohammed';
-const firstName = 'Mohammed';
-const lastName = 'Osama';
-const createdAt = '1 day ago';
-const avatar = fakeAvatar; 
 
 const FeedCardHeader = (props) => {
+    console.log(props)
   return (
     <Root>
         <AvatarContainer>
-            <Avatar source={{ uri: avatar }} />
+            <Avatar source={{ uri: props.avatar }} />
         </AvatarContainer>
         <MetaContainer>
             <MetaTopContainer>
                 <MetaFullName>
-                    {firstName} {lastName}
+                    {props.firstName} {props.lastName}
                 </MetaFullName>
                 <MetaText style={{ marginLeft: 5 }}>
-                    @{username}
+                    @{props.username}
                 </MetaText>
             </MetaTopContainer>
             <MetaBottomContainer>
                 <MetaText>
-                    {createdAt}
+                    {props.createdAt}
                 </MetaText>
             </MetaBottomContainer>
         </MetaContainer>
