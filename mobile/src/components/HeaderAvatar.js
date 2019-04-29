@@ -12,18 +12,11 @@ import { logout } from '../store/actions/authActions'
 const AVATAR_SIZE = 30;
 const AVATAR_RADUIS = AVATAR_SIZE / 2;
 import {navigate, getParam } from '../services/navigator.js'
+import HeaderButton from './HeaderButton'
 const Avatar = styled.Image`
     height: ${AVATAR_SIZE};
     width: ${AVATAR_SIZE};
     borderRadius: ${AVATAR_RADUIS};
-`
-const Button = styled(Touchable).attrs({
-    feedback: 'opacity',
-    hitSlop: { top: 20, bottom: 20, right: 20, left: 20 }
-})`
-    marginLeft: 15;
-    justifyContent: center;
-    alignItems: center;
 `
 class HeaderAvatar extends Component {
     constructor(props) {
@@ -48,23 +41,23 @@ class HeaderAvatar extends Component {
         const { me, loading } = this.props.user;
         if (loading) {
             return (
-                <Button disabled>
+                <HeaderButton  side="left" disabled>
                     <Loading size="small" />
-                </Button>
+                </HeaderButton>
             )   
         }
         if (me && this.props.isAuthenticated) {
             return (
-                <Button onPress={ this._onOpenActionSheet }>
+                <HeaderButton side="left" onPress={ this._onOpenActionSheet }>
                     <Avatar source={{ uri: me.avatar }} />
-                </Button>
+                </HeaderButton>
             );
 
         }
         return (
-            <Button onPress={this._onUnauthenticatedPress}>
+            <HeaderButton side="left" onPress={this._onUnauthenticatedPress}>
                 <Loading size="small" />
-            </Button>
+            </HeaderButton>
         )
     }
 }

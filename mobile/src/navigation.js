@@ -1,5 +1,5 @@
 import React from "react";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, SimpleLineIcons, EvilIcons } from "@expo/vector-icons";
 import {
     createStackNavigator,
     createAppContainer,
@@ -9,11 +9,13 @@ import {
 import { colors } from "./utils/constants";
 import HomeScreen from "./screens/HomeScreen.js";
 import HeaderAvatar from "./components/HeaderAvatar.js";
+import HeaderButton from "./components/HeaderButton.js";
 import ExploreScreen from "./screens/ExploreScreen.js";
+import NewTweetScreen from "./screens/NewTweetScreen.js";
 import ProfileScreen from "./screens/ProfileScreen.js";
 import NotificationScreen from "./screens/NotificationScreen.js";
 import RegisterScreen from "./screens/auth/RegisterScreen";
-import { AsyncStorage } from 'react-native'
+import { AsyncStorage, Keyboard } from "react-native";
 
 import LoginScreen from "./screens/auth/LoginScreen";
 const TAB_ICON_SIZE = 20;
@@ -119,8 +121,20 @@ export default createAppContainer(
         {
             Home: {
                 screen: Tabs,
-                navigationOptions: () => ({
+                navigationOptions: ({ navigation }) => ({
                     headerLeft: <HeaderAvatar />,
+                    headerRight: (
+                        <HeaderButton
+                            side="right"
+                            onPress={() => navigation.navigate("NewTweet")}
+                        >
+                            <SimpleLineIcons
+                                color={colors.PRIMARY}
+                                size={20}
+                                name="pencil"
+                            />
+                        </HeaderButton>
+                    ),
                     headerTitle: "Home"
                 })
             },
@@ -129,10 +143,45 @@ export default createAppContainer(
                 navigationOptions: () => ({
                     headerTitle: "Authentication"
                 })
+            },
+            NewTweet: {
+                screen: NewTweetScreen,
+                navigationOptions: ({ navigation }) => ({
+                    headerMode: "none",
+                    headerLeft: <HeaderAvatar />,
+                    headerRight: (
+                        <HeaderButton
+                            side="right"
+                            onPress={() => {
+                                Keyboard.dismiss();
+                                navigation.goBack(null);
+                                
+                            }}
+                        >
+                            <EvilIcons
+                                color={colors.PRIMARY}
+                                size={25}
+                                name="close"
+                            />
+                        </HeaderButton>
+                    )
+                })
             }
         },
         {
-            initialRouteName: hasToken() ? "Home" : "Authentication"
+            initialRouteName: hasToken() ? "Home" : "Authentication",
+            cardStyle: {
+                backgroundColor: "#F1F6FA"
+            },
+            navigationOptions: () => ({
+                headerStyle: {
+                    backgroundColor: colors.WHITE
+                },
+                headerTitleStyle: {
+                    fontWeight: "bold",
+                    color: colors.SECONDARY
+                }
+            })
         }
     )
 );

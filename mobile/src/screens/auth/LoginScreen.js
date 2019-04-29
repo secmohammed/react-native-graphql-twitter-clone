@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Touchable from '@appandflow/touchable';
 import { colors, fakeAvatar } from '../../utils/constants.js'
-import { Platform, Keyboard, AsyncStorage } from 'react-native';
+import { Platform, Keyboard } from 'react-native';
 import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import { compose } from 'redux'

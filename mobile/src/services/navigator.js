@@ -1,6 +1,6 @@
 import { NavigationActions } from 'react-navigation';
 import type { NavigationParams, NavigationRoute } from 'react-navigation';
-import _ from 'lodash'
+import { find } from 'lodash'
 let _container; // eslint-disable-line
 let _initialized;
 export const  setContainer = (container: Object) => {
@@ -65,7 +65,7 @@ export const getParam = name => {
   if (_initialized) {
     const { routeName, routes } = getCurrentRoute();
 
-    const route =  _.find(routes, route => {
+    const route =  find(routes, route => {
       if (route.routeName == routeName && route.params) {
         return route.params[name];
       }
