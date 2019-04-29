@@ -4,6 +4,7 @@ import { graphql } from 'react-apollo'
 import FeedCard from '../components/FeedCard/FeedCard.js'
 import GET_TWEETS_QUERY from '../graphql/queries/getTweets.js'
 import { ActivityIndicator, FlatList } from 'react-native';
+
 const Root = styled.View`
     backgroundColor: #f2f2f2;
     flex: 1;
@@ -35,7 +36,6 @@ class HomeScreen extends Component {
     }
 }
 const mapResultsToProps = ({ data }) => {
-
   return {
     tweets: data,
   };

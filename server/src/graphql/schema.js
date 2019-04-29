@@ -45,7 +45,7 @@ export default `
     updateTweet(_id: ID!, text: String): Tweet
     deleteTweet(_id: ID!): Status
     signup(email: String!, fullName: String!, password: String!, avatar: String, username: String): Auth
-    login(email: String!, password: String!): Auth
+    signin(email: String!, password: String!): Auth
   }
   schema {
     query: Query

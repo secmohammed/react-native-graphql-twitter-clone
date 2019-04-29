@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { fakeAvatar } from '../../utils/constants.js'
-
+import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 const AVATAR_SIZE = 40;
 const AVATAR_RADIUS = AVATAR_SIZE / 2;
 
@@ -69,7 +69,7 @@ const FeedCardHeader = (props) => {
             </MetaTopContainer>
             <MetaBottomContainer>
                 <MetaText>
-                    {props.createdAt}
+                    {distanceInWordsToNow(props.createdAt)}
                 </MetaText>
             </MetaBottomContainer>
         </MetaContainer>

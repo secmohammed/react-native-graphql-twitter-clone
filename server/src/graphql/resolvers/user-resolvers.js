@@ -4,8 +4,9 @@ import { requireAuth } from '../../services/auth';
 export default {
   signup: async (_, { fullName, ...rest }) => {
     try {
-      const [firstName, ...lastName] = fullName.split(' ');
-      const user = await User.create({ firstName, lastName, ...rest });
+      let [firstName, ...lastName] = fullName.split(' ');
+      // fix lastName.
+      const user = await User.create({ firstName, ...rest });
 
       return {
         token: user.createToken(),
@@ -15,7 +16,7 @@ export default {
     }
   },
 
-  login: async (_, { email, password }) => {
+  signin: async (_, { email, password }) => {
     try {
       const user = await User.findOne({ email });
 
