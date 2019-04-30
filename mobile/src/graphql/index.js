@@ -3,6 +3,9 @@ import { createHttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { AsyncStorage } from "react-native";
 import { setContext } from "apollo-link-context";
+import config from 'react-global-configuration';
+
+require('../config');
 
 const customFetch = (uri, options) => {
   return fetch(uri, options)
@@ -17,7 +20,7 @@ const customFetch = (uri, options) => {
 };
 
 const httpLink = createHttpLink({
-  uri: "https://a78168d2.ngrok.io/graphql",
+  uri: config.get('graphql.uri'),
   fetch: customFetch
 });
 const authLink = setContext(async (_, { headers }) => {

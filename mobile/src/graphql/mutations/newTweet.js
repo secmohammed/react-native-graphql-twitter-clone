@@ -7,7 +7,16 @@ export default gql`
         createTweet(
             text: $text,
         ) {
+            text
             _id
+            createdAt
+            favoriteCount
+            user {
+                username
+                avatar
+                lastName
+                firstName
+            }
         }
     }
 `;

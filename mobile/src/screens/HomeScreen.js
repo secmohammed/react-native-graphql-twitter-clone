@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components/native';
-import { graphql } from 'react-apollo'
+import { graphql } from 'react-apollo';
 import FeedCard from '../components/FeedCard/FeedCard.js'
 import GET_TWEETS_QUERY from '../graphql/queries/getTweets.js'
 import { ActivityIndicator, FlatList } from 'react-native';
@@ -15,6 +15,8 @@ const List = styled.ScrollView`
 `
 class HomeScreen extends Component {
     _renderItem = ({ item }) => <FeedCard {...item} />
+    componentWillMount() {
+    }
     render() {
         if(this.props.tweets.loading) {
             return(
@@ -41,6 +43,5 @@ const mapResultsToProps = ({ data }) => {
   };
 };
 
-export default graphql(GET_TWEETS_QUERY,{
-    props: mapResultsToProps
-})(HomeScreen)
+//cache-and-network
+export default graphql(GET_TWEETS_QUERY,{ name: "tweets", options: {fetchPolicy: 'cache-and-network'}})(HomeScreen)

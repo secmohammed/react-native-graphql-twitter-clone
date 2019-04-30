@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import styled from 'styled-components/native';
 import { Platform, Keyboard } from 'react-native'
 import Touchable from '@appandflow/touchable'
-import { graphql } from 'react-apollo'
-import CREATE_TWEET_QUERY from '../graphql/mutations/newTweet'
+import { graphql, compose } from 'react-apollo';
+import CREATE_TWEET_MUTATION from '../graphql/mutations/newTweet'
+import GET_TWEETS_QUERY from '../graphql/queries/getTweets.js';
+import ME_QUERY from '../graphql/queries/me.js'
 import Loading from '../components/Loading'
 import { colors } from '../utils/constants.js'
+import { setTweetCreationStatus } from '../store/actions/TweetActions.js';
+const uuidv4 = require('uuid/v4');
 
 const Root = styled.View`
     backgroundColor: ${props => props.theme.WHITE};
@@ -67,7 +71,9 @@ class NewTweetScreen extends Component {
     componentWillUnmount() {
       Keyboard.dismiss();
     }
-
+    get _buttonDisabled () {
+        return this.state.text.length < 5;
+    }
     get _textLength() {
         return 140 - this.state.text.length;
     }
@@ -75,18 +81,43 @@ class NewTweetScreen extends Component {
         this.setState({
             loading: true
         });
+        const { username, firstName, avatar, lastName } = this.props.user.me;
         const { text } = this.state
         const { data, error } = await this.props.mutate({
             variables: {
                 text
+            },
+            optimisticResponse: {
+                __typename: 'Mutation',
+                createTweet: {
+                    __typename: 'Tweet',
+                    text,
+                    favoriteCount: 0,
+                    _id: uuidv4(),
+                    createdAt: new Date(),
+                    user: {
+                        __typename: 'User',
+                        username,
+                        firstName,
+                        lastName,
+                        avatar
+                    }
+                }
+            },
+            update: (proxy, { data: { createTweet } }) => {
+                const data = proxy.readQuery({ query: GET_TWEETS_QUERY });
+                data.getTweets.unshift(createTweet);
+                proxy.writeQuery({ query : GET_TWEETS_QUERY, data })
             }
         })
         this.setState({
             loading: false
         });
+
         this.props.navigation.navigate('Home');
 
     }
+
     _onChangeText = text => this.setState({ text });
     render() {
         if (this.props.loading) {
@@ -100,7 +131,7 @@ class NewTweetScreen extends Component {
                         {this._textLength}
                     </TextLength>
 
-                    <TweetButton onPress={this._onSubmit}>
+                    <TweetButton onPress={this._onSubmit} disabled={this._buttonDisabled}>
                         <TweetButtonText>
                             Tweet
                         </TweetButtonText>
@@ -110,5 +141,8 @@ class NewTweetScreen extends Component {
         );
     }
 }
-export default graphql(CREATE_TWEET_QUERY)(NewTweetScreen)
+export default compose(
+    graphql(CREATE_TWEET_MUTATION),
+    graphql(ME_QUERY,{ name: "user", options: {fetchPolicy: 'cache-only'}})
+)(NewTweetScreen)
 
