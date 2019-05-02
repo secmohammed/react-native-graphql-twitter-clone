@@ -47,8 +47,13 @@ export default `
     signup(email: String!, fullName: String!, password: String!, avatar: String, username: String): Auth
     signin(email: String!, password: String!): Auth
   }
+  type Subscription {
+    tweetAdded: Tweet!
+  }
+
   schema {
     query: Query
     mutation: Mutation
+    subscription: Subscription
   }
 `;

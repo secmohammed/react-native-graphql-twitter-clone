@@ -1,21 +1,25 @@
 /* eslint-disable no-console */
 
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-import constants from './constants';
+import constants from "./constants";
 
 mongoose.Promise = global.Promise;
 
-mongoose.set('debug', true); // debug mode on
+mongoose.set("debug", true); // debug mode on
 
 try {
-  mongoose.connect(constants.DB_URL, { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false });
+	mongoose.connect(constants.DB_URL, {
+		useNewUrlParser: true,
+		useCreateIndex: true,
+		useFindAndModify: false
+	});
 } catch (err) {
-  mongoose.createConnection(constants.DB_URL);
+	mongoose.createConnection(constants.DB_URL);
 }
 
 mongoose.connection
-  .once('open', () => console.log('MongoDB Running'))
-  .on('error', e => {
-    throw e;
-  });
+	.once("open", () => console.log("MongoDB Running"))
+	.on("error", e => {
+		throw e;
+	});

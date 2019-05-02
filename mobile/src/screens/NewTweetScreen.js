@@ -8,7 +8,6 @@ import GET_TWEETS_QUERY from '../graphql/queries/getTweets.js';
 import ME_QUERY from '../graphql/queries/me.js'
 import Loading from '../components/Loading'
 import { colors } from '../utils/constants.js'
-import { setTweetCreationStatus } from '../store/actions/TweetActions.js';
 const uuidv4 = require('uuid/v4');
 
 const Root = styled.View`
