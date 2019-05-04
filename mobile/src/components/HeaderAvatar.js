@@ -15,7 +15,7 @@ import HeaderButton from "./HeaderButton";
 const Avatar = styled.Image`
 	height: ${AVATAR_SIZE};
 	width: ${AVATAR_SIZE};
-	borderradius: ${AVATAR_RADUIS};
+	borderRadius: ${AVATAR_RADUIS};
 `;
 class HeaderAvatar extends Component {
 	constructor(props) {

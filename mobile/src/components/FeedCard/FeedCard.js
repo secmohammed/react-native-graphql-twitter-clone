@@ -26,7 +26,6 @@ const CardContentText = styled.Text`
     fontWeight: 500;
     color: ${props => props.theme.SECONDARY};
 `;
-const text = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit ut rem asperiores omnis tenetur aperiam, eum maxime, culpa repudiandae dolores.'
 
 const FeedCard = (props) =>  {
     return (

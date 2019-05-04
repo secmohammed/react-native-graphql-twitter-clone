@@ -17,18 +17,18 @@ const Root = styled(Touchable).attrs({
 })`
 	flex: 1;
 	position: relative;
-	justifycontent: center;
-	alignitems: center;
+	justifyContent: center;
+	alignItems: center;
 `;
 const Wrapper = styled.View`
 	alignself: stretch;
-	alignitems: center;
-	justifycontent: center;
+	alignItems: center;
+	justifyContent: center;
 	flex: 1;
 `;
 const BackButton = styled.View`
-	justifycontent: center;
-	alignitems: center;
+	justifyContent: center;
+	alignItems: center;
 	position: absolute;
 	top: 5%;
 	zindex: 1;
@@ -43,25 +43,25 @@ const ButtonConfirm = styled(Touchable).attrs({
 	height: 50;
 	backgroundcolor: ${props => props.theme.PRIMARY};
 	borderradius: 10;
-	justifycontent: center;
-	alignitems: center;
-	shadowcolor: #000;
-	shadowopacity: 0.2;
-	shadowradius: 5;
-	shadowoffset: 0px 2px;
+	justifyContent: center;
+	alignItems: center;
+	shadowColor: #000;
+	shadowOpacity: 0.2;
+	shadowRadius: 5;
+	shadowOffset: 0px 2px;
 	elevation: 2;
 `;
 const ButtonConfirmText = styled.Text`
 	color: ${props => props.theme.WHITE};
-	fontweight: 600;
+	fontWeight: 600;
 `;
 const InputWrapper = styled.View`
 	height: 50;
 	width: 70%;
-	borderbottomwidth: 2;
-	marginvertical: 5;
-	justifycontent: flex-end;
-	borderbottomcolor: ${props => props.theme.LIGHT_GRAY};
+	borderBottomWidth: 2;
+	marginVertical: 5;
+	justifyContent: flex-end;
+	borderBottomColor: ${props => props.theme.LIGHT_GRAY};
 `;
 const Input = styled.TextInput.attrs({
 	placeholderTextColor: colors.LIGHT_GRAY,

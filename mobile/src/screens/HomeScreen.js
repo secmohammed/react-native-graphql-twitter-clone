@@ -7,9 +7,9 @@ import { ActivityIndicator, FlatList } from "react-native";
 import TWEET_ADDED_SUBSCRIPTION from "../graphql/subscriptions/tweetAdded.js";
 
 const Root = styled.View`
-	backgroundcolor: #f2f2f2;
+	backgroundColor: #f2f2f2;
 	flex: 1;
-	paddingtop: 5;
+	paddingTop: 5;
 `;
 const List = styled.ScrollView``;
 class HomeScreen extends Component {

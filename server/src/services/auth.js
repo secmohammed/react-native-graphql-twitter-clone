@@ -10,6 +10,22 @@ export async function decodeToken(token) {
 	}
 	throw new Error("Token not valid !");
 }
+
+export async function auth(req, res, next) {
+	try {
+		const token = req.headers.authorization;
+		if (token != null) {
+			const user = await decodeToken(token);
+			req.user = user;
+		} else {
+			req.user = null;
+		}
+		return next();
+	} catch (e) {
+		throw e;
+	}
+}
+
 export async function requireAuth(user) {
 	if (!user || !user._id) {
 		throw new Error("Unauthorized attempt");

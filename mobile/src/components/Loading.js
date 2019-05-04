@@ -6,9 +6,9 @@ import styled from "styled-components/native";
 import { colors } from "../utils/constants.js";
 
 const Root = styled.View`
-	flex: ;
-	justifycontent: center;
-	alignitems: center;
+	flex: 1;
+	justifyContent: center;
+	alignItems: center;
 `;
 
 export default function Loading({ color = colors.PRIMARY, size = "large" }) {

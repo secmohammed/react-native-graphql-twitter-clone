@@ -52,7 +52,6 @@ const MetaFullName = styled.Text`
 `
 
 const FeedCardHeader = (props) => {
-    console.log(props)
   return (
     <Root>
         <AvatarContainer>

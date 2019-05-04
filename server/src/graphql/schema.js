@@ -6,16 +6,6 @@ export default `
   type Auth {
     token: String!
   }
-  type User {
-    _id: ID!
-    username: String
-    email: String!
-    firstName: String
-    lastName: String
-    avatar: String
-    createdAt: Date!
-    updatedAt: Date!
-  }
   type Me {
     _id: ID!
     username: String
@@ -29,7 +19,7 @@ export default `
   type Tweet {
     _id: ID!
     text: String!
-    user: User!
+    user: Me!
     favoriteCount: Int!
     createdAt: Date!
     updatedAt: Date!

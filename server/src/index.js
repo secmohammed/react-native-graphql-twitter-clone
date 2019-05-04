@@ -5,7 +5,6 @@ import "./config/db";
 import constants from "./config/constants";
 import mocks from "./mocks";
 import { middlewares } from "./config/middlewares.js";
-import { schema } from "./graphql/schema.js";
 
 const app = express();
 
