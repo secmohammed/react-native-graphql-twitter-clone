@@ -50,6 +50,14 @@ class FeedCardButton extends Component {
         const { data, error } = await this.props.mutate({
             variables: {
                 id: this.props.tweetId
+            },
+            optimisticResponse: {
+                __typename: 'Mutation',
+                favoriteTweet: {
+                    __typename: 'Tweet',
+                    isFavorited: !this.state.isFavorited,
+                    favoriteCount: this.state.isFavorited ? this.state.favoriteCount - 1 : this.state.favoriteCount + 1
+                }
             }
         })
         if (data) {
@@ -97,5 +105,5 @@ export default compose(
         {
             login
         }
-    ),graphql(FAVORITE_TWEET_MUTATION)
+    ), graphql(FAVORITE_TWEET_MUTATION)
 )(FeedCardButton);
