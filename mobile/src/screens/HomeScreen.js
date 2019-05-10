@@ -40,6 +40,20 @@ class HomeScreen extends Component {
 	// 		onError: err => console.error(err)
 	// 	});
 	// }
+	_handleLoadMore = () => {
+		this.props.tweets.fetchMore({
+			variables: {
+              offset: this.props.tweets.getTweets.length
+            },
+            updateQuery: (prev, { fetchMoreResult }) => {
+            	console.log(fetchMoreResult)
+              if (!fetchMoreResult) return prev;
+              return Object.assign({}, prev, {
+                getTweets: [...prev.getTweets, ...fetchMoreResult.getTweets]
+              });
+            }
+		})
+	}
 	render() {
 		if (this.props.tweets.loading) {
 			return (
@@ -60,6 +74,8 @@ class HomeScreen extends Component {
 					data={this.props.tweets.getTweets}
 					keyExtractor={item => item._id}
 					renderItem={this._renderItem}
+					onEndReached={this._handleLoadMore}
+			         onEndReachedThreshold={0.5}
 				/>
 			</Root>
 		);
@@ -78,8 +94,12 @@ const mapStateToProps = state => {
 
 export default compose(
     graphql(GET_TWEETS_QUERY, {
+    	
 		name: "tweets",
-		options: { fetchPolicy: "cache-and-network" }
+		options: { fetchPolicy: "cache-and-network",variables: {
+		 	offset: 0,
+	      	limit: 3
+    	}, }
 	}),
 	connect(
 		mapStateToProps

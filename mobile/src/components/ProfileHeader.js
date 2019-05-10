@@ -19,7 +19,6 @@ const Heading = styled.View`
 const Avatar = styled.Image`
     height: ${AVATAR_SIZE};
     width: ${AVATAR_SIZE};
-    backgroundColor: red;
     borderRadius: ${AVATAR_SIZE/ 2};
 `
 const UsernameContainer = styled.View`
@@ -61,7 +60,7 @@ const ProfileHeader = (props) => {
   return (
     <Root>
         <Heading>
-            <Avatar  source={{ uri: props.avatar }} />
+            <Avatar source={{ uri: props.avatar }} />
             <UsernameContainer>
                 <FullName>
                     {props.firstName} {props.lastName}

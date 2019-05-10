@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export default gql`
-	{
-		getTweets {
+	query getTweets($offset: Int, $limit: Int) {
+		getTweets(offset: $offset, limit: $limit) {
 			text
 			_id
 			createdAt

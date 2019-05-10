@@ -28,7 +28,7 @@ export default `
   }
   type Query {
     getTweet(_id: ID!): Tweet
-    getTweets: [Tweet]
+    getTweets(offset: Int, limit: Int): [Tweet]
     getUserTweets: [Tweet]
     me: User
   }
