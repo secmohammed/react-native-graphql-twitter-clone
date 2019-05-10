@@ -36,7 +36,7 @@ const FeedCard = (props) =>  {
                     {props.text}
                 </CardContentText>
             </CardContentContainer>
-            <FeedCardButton favoriteCount={props.favoriteCount} />
+            <FeedCardButton tweetId={props._id} favoriteCount={props.favoriteCount} />
 
         </Root>
     );

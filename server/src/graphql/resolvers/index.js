@@ -6,9 +6,6 @@ import User from "../../Models/User";
 
 export default {
 	Date: GraphQLDate,
-	Tweet: {
-		user: ({ user }) => User.findById(user)
-	},
 	Query: {
 		getTweet: TweetResolvers.getTweet,
 		getTweets: TweetResolvers.getTweets,
@@ -19,6 +16,7 @@ export default {
 		createTweet: TweetResolvers.createTweet,
 		updateTweet: TweetResolvers.updateTweet,
 		deleteTweet: TweetResolvers.deleteTweet,
+		favoriteTweet: TweetResolvers.favoriteTweet,
 		signup: UserResolvers.signup,
 		signin: UserResolvers.signin
 	},

@@ -14,25 +14,24 @@ const Root = styled.View`
 const List = styled.ScrollView``;
 class HomeScreen extends Component {
 	_renderItem = ({ item }) => <FeedCard {...item} />;
-	componentDidMount() {
-		this.props.tweets.subscribeToMore({
-			document: TWEET_ADDED_SUBSCRIPTION,
-			updateQuery: (prev, { subscriptionData }) => {
-				console.log(subscriptionData);
-				if (!subscriptionData) {
-					return prev;
-				}
-				const newTweet = subscriptionData.data.tweetAdded;
-				if (!prev.getTweets.find(t => t._id === newTweet._id)) {
-					return {
-						...prev,
-						getTweets: [{ ...newTweet }, ...prev.getTweets]
-					};
-				}
-			},
-			onError: err => console.error(err)
-		});
-	}
+	// componentDidMount() {
+	// 	this.props.tweets.subscribeToMore({
+	// 		document: TWEET_ADDED_SUBSCRIPTION,
+	// 		updateQuery: (prev, { subscriptionData }) => {
+	// 			if (!subscriptionData) {
+	// 				return prev;
+	// 			}
+	// 			const newTweet = subscriptionData.data.tweetAdded;
+	// 			if (!prev.getTweets.find(t => t._id === newTweet._id)) {
+	// 				return {
+	// 					...prev,
+	// 					getTweets: [{ ...newTweet }, ...prev.getTweets]
+	// 				};
+	// 			}
+	// 		},
+	// 		onError: err => console.error(err)
+	// 	});
+	// }
 	render() {
 		if (this.props.tweets.loading) {
 			return (
@@ -59,7 +58,6 @@ const mapResultsToProps = ({ data }) => {
 	};
 };
 
-//cache-and-network
 export default graphql(GET_TWEETS_QUERY, {
 	name: "tweets",
 	options: { fetchPolicy: "cache-and-network" }

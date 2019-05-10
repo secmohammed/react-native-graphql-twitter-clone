@@ -15,11 +15,11 @@ const customFetch = (uri, options) => {
 		.then(response => {
 			if (response.status >= 400) {
 				// or handle 400 errors
-				return Promise.reject(response.status);
+				return Promise.reject(response);
 			}
 			return response;
 		})
-		.catch(err => console.log(err));
+		.catch(err => console.log(err.message));
 };
 
 const httpLink = createHttpLink({

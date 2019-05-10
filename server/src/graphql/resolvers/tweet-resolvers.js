@@ -1,4 +1,6 @@
 import Tweet from "../../Models/Tweet";
+import User from "../../Models/User";
+import FavoriteTweet from "../../Models/FavoriteTweet";
 import { requireAuth } from "../../services/auth";
 
 const TWEET_ADDED = "TWEET_ADDED";
@@ -13,7 +15,7 @@ export default {
 	},
 	getTweets: async (_, args, { user }) => {
 		try {
-			return await Tweet.find({}).sort({ createdAt: -1 });
+			return  Tweet.find({}).populate('user').sort({ createdAt: -1 });
 		} catch (error) {
 			throw error;
 		}
@@ -29,8 +31,8 @@ export default {
 	createTweet: async (_, args, { user, pubsub }) => {
 		try {
 			await requireAuth(user);
-			const tweet = Tweet.create({ ...args, user: user._id });
-			await pubsub.publish(TWEET_ADDED, { tweet });
+			let tweet = await Tweet.create({ ...args, user: user._id });
+		    pubsub.publish(TWEET_ADDED, { [TWEET_ADDED]: tweet });
 			return tweet;
 		} catch (error) {
 			throw error;
@@ -52,6 +54,34 @@ export default {
 			return tweet.save();
 		} catch (error) {
 			throw error;
+		}
+	},
+	favoriteTweet: async (_, { _id }, { user }) => {
+		try {
+			await requireAuth(user);
+			const favorites = await FavoriteTweet.findOne({ user: user._id });
+
+			if (favorites.tweets.some(t => t.equals(_id))) {
+				favorites.tweets.pull(_id);
+				await favorites.save();
+				const tweet = await Tweet.decFavoriteCount(_id);
+
+ 				return {
+					isFavorited: false,
+					...tweet.toJSON()
+				}
+			}
+			favorites.tweets.push(_id);
+			await favorites.save();
+			const tweet = await Tweet.incFavoriteCount(_id);
+
+			return {
+				isFavorited: true,
+				...tweet.toJSON()
+
+			}
+		} catch(e) {
+			throw e;
 		}
 	},
 	deleteTweet: async (_, { _id }, { user }) => {

@@ -21,7 +21,7 @@ const Root = styled(Touchable).attrs({
 	alignItems: center;
 `;
 const Wrapper = styled.View`
-	alignself: stretch;
+	alignSelf: stretch;
 	alignItems: center;
 	justifyContent: center;
 	flex: 1;
@@ -31,7 +31,7 @@ const BackButton = styled.View`
 	alignItems: center;
 	position: absolute;
 	top: 5%;
-	zindex: 1;
+	zIndex: 1;
 	left: 5%;
 `;
 const ButtonConfirm = styled(Touchable).attrs({
@@ -41,8 +41,8 @@ const ButtonConfirm = styled(Touchable).attrs({
 	bottom: 15%;
 	width: 70%;
 	height: 50;
-	backgroundcolor: ${props => props.theme.PRIMARY};
-	borderradius: 10;
+	backgroundColor: ${props => props.theme.PRIMARY};
+	borderRadius: 10;
 	justifyContent: center;
 	alignItems: center;
 	shadowColor: #000;

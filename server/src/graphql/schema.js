@@ -6,7 +6,7 @@ export default `
   type Auth {
     token: String!
   }
-  type Me {
+  type User {
     _id: ID!
     username: String
     email: String!
@@ -19,8 +19,9 @@ export default `
   type Tweet {
     _id: ID!
     text: String!
-    user: Me!
+    user: User!
     favoriteCount: Int!
+    isFavorited: Boolean
     createdAt: Date!
     updatedAt: Date!
   }
@@ -28,14 +29,15 @@ export default `
     getTweet(_id: ID!): Tweet
     getTweets: [Tweet]
     getUserTweets: [Tweet]
-    me: Me
+    me: User
   }
   type Mutation {
     createTweet(text: String!): Tweet
     updateTweet(_id: ID!, text: String): Tweet
     deleteTweet(_id: ID!): Status
+    favoriteTweet(_id: ID!): Tweet
     signup(email: String!, fullName: String!, password: String!, avatar: String, username: String): Auth
-    signin(email: String!, password: String!): Auth
+    signin(email: String!, password: String!): Auth!
   }
   type Subscription {
     tweetAdded: Tweet!
