@@ -5,6 +5,8 @@ import FeedCard from "../components/FeedCard/FeedCard.js";
 import GET_TWEETS_QUERY from "../graphql/queries/getTweets.js";
 import { ActivityIndicator, FlatList } from "react-native";
 import TWEET_ADDED_SUBSCRIPTION from "../graphql/subscriptions/tweetAdded.js";
+import { connect } from "react-redux";
+import { compose } from "redux";
 
 const Root = styled.View`
 	backgroundColor: #f2f2f2;
@@ -13,6 +15,11 @@ const Root = styled.View`
 `;
 const List = styled.ScrollView``;
 class HomeScreen extends Component {
+	componentWillMount() {
+	  if(!this.props.isAuthenticated) {
+	  	this.props.navigation.navigate('Login')
+	  }
+	}
 	_renderItem = ({ item }) => <FeedCard {...item} />;
 	// componentDidMount() {
 	// 	this.props.tweets.subscribeToMore({
@@ -57,8 +64,19 @@ const mapResultsToProps = ({ data }) => {
 		tweets: data
 	};
 };
+const mapStateToProps = state => {
+	return {
+		isAuthenticated: state.auth.isAuthenticated
+	};
+};
 
-export default graphql(GET_TWEETS_QUERY, {
-	name: "tweets",
-	options: { fetchPolicy: "cache-and-network" }
-})(HomeScreen);
+export default compose(
+    graphql(GET_TWEETS_QUERY, {
+		name: "tweets",
+		options: { fetchPolicy: "cache-and-network" }
+	}),
+	connect(
+		mapStateToProps
+	),
+
+)(HomeScreen);

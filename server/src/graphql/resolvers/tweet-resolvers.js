@@ -13,9 +13,31 @@ export default {
 			throw error;
 		}
 	},
-	getTweets: async (_, args, { user }) => {
+	getTweets: async (_, args, { user, pubsub }) => {
 		try {
-			return  Tweet.find({}).populate('user').sort({ createdAt: -1 });
+			await requireAuth(user);
+
+			const p1 = Tweet.find({}).populate('user').sort({ createdAt: -1 });
+			const p2 = FavoriteTweet.findOne({ user: user._id });
+			const [tweets, favorites] = await Promise.all([p1, p2]);
+			return tweets.reduce((arr, tweet) => {
+				const tw = tweet.toJSON();
+				if (favorites.tweets.some(t => t.equals(tweet._id))) {
+					arr.push({
+						...tw,
+						isFavorited: true
+					});
+					pubsub.publish(TWEET_ADDED, { [TWEET_ADDED]: { ...tweet } });
+
+				} else {
+
+					arr.push({
+						...tw,
+						isFavorited: false
+					});
+				}
+				return arr;
+			}, []);
 		} catch (error) {
 			throw error;
 		}
@@ -32,7 +54,7 @@ export default {
 		try {
 			await requireAuth(user);
 			let tweet = await Tweet.create({ ...args, user: user._id });
-		    pubsub.publish(TWEET_ADDED, { [TWEET_ADDED]: tweet });
+			pubsub.publish(TWEET_ADDED, { [TWEET_ADDED]: { ...tweet } });
 			return tweet;
 		} catch (error) {
 			throw error;
@@ -60,16 +82,29 @@ export default {
 		try {
 			await requireAuth(user);
 			const favorites = await FavoriteTweet.findOne({ user: user._id });
+			if (!favorites) {
+				let favoriteTweet = new FavoriteTweet({
+					user: user._id
+				})
+				favoriteTweet.tweets.push(_id);
+				await favoriteTweet.save();
+				const tweet = await Tweet.incFavoriteCount(_id);
 
+				return {
+					isFavorited: true,
+					...tweet.toJSON()
+				};
+
+			}
 			if (favorites.tweets.some(t => t.equals(_id))) {
 				favorites.tweets.pull(_id);
 				await favorites.save();
 				const tweet = await Tweet.decFavoriteCount(_id);
 
- 				return {
+				return {
 					isFavorited: false,
 					...tweet.toJSON()
-				}
+				};
 			}
 			favorites.tweets.push(_id);
 			await favorites.save();
@@ -78,9 +113,8 @@ export default {
 			return {
 				isFavorited: true,
 				...tweet.toJSON()
-
-			}
-		} catch(e) {
+			};
+		} catch (e) {
 			throw e;
 		}
 	},

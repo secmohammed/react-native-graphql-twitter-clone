@@ -8,7 +8,6 @@ export default {
 			const [firstName, ...lastName] = fullName.split(" ");
 			// fix lastName.
 			const user = await User.create({ firstName, ...rest });
-			await FavoriteTweet.create({ userId: user._id});
 			return {
 				token: user.createToken()
 			};
