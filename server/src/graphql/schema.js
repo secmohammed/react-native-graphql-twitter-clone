@@ -13,6 +13,7 @@ export default `
     firstName: String
     lastName: String
     avatar: String
+    tweets: [Tweet]!
     createdAt: Date!
     updatedAt: Date!
   }

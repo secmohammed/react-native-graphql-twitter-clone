@@ -5,7 +5,7 @@ import graphql from "graphql";
 import cors from "cors";
 import { createServer } from "http";
 import { PubSub } from "graphql-subscriptions";
-
+import { makeExecutableSchema } from 'graphql-tools'
 import typeDefs from "../graphql/schema";
 import resolvers from "../graphql/resolvers";
 import { auth } from "../services/auth.js";
@@ -17,7 +17,10 @@ const errorHandler = (err, req, res, next) => {
 	const { status } = err;
 	res.status(status).json(err);
 };
-
+const schema = makeExecutableSchema({
+ 	typeDefs,
+  	resolvers,
+});
 const server = new ApolloServer({
 	typeDefs,
 	resolvers,
