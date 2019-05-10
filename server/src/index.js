@@ -8,7 +8,7 @@ import { middlewares } from "./config/middlewares.js";
 const app = express();
 
 const { httpServer, server } = middlewares(app);
-
+app.use((req, res, next) => setTimeout(next, 5000))
 // mocks().then(() => {
 httpServer.listen(constants.PORT, constants.IP_ADDRESS, () => {
 	console.log(

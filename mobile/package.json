@@ -31,6 +31,7 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.3.0",
+    "rn-placeholder": "^2.0.0",
     "styled-components": "^4.2.0",
     "subscriptions-transport-ws": "^0.9.16",
     "uuid": "^3.3.2"

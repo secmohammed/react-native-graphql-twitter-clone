@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import Placeholder, { Line, Media } from "rn-placeholder";
 
 import FeedCardHeader from './FeedCardHeader.js'
 import FeedCardButton from './FeedCardButton.js'
@@ -26,8 +27,18 @@ const CardContentText = styled.Text`
     fontWeight: 500;
     color: ${props => props.theme.SECONDARY};
 `;
-
+const Wrapper = styled.View`flex: 1;`
 const FeedCard = (props) =>  {
+    if (props.placeholder) {
+        <Root>
+            <Placeholder isReady={!props.isLoaded} animate="shine" renderLeft={() => <Media hasRadius />}>
+                <Line width="70%" />
+                <Line />
+                <Line />
+                <Line width="30%" />
+            </Placeholder>
+        </Root>
+    }
     return (
         <Root>
             <FeedCardHeader createdAt={props.createdAt} {...props.user} />

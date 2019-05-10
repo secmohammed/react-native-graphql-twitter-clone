@@ -21,6 +21,7 @@ class HomeScreen extends Component {
 	  }
 	}
 	_renderItem = ({ item }) => <FeedCard {...item} />;
+	_renderPlaceholder = () => <FeedCard placeholder isLoaded={this.props.tweets.loading}/>
 	// componentDidMount() {
 	// 	this.props.tweets.subscribeToMore({
 	// 		document: TWEET_ADDED_SUBSCRIPTION,
@@ -43,7 +44,12 @@ class HomeScreen extends Component {
 		if (this.props.tweets.loading) {
 			return (
 				<Root>
-					<ActivityIndicator />
+					<FlatList
+						contentContainerStyle={{ alignSelf: "stretch" }}
+						data={['one','two','three']}
+						renderItem={this._renderPlaceholder}
+						keyExtractor={item => item}
+					/>
 				</Root>
 			);
 		}
