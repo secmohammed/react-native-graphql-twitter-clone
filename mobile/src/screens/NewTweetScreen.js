@@ -92,21 +92,16 @@ class NewTweetScreen extends Component {
                     __typename: 'Tweet',
                     text,
                     favoriteCount: 0,
+                    isFavorited: false,
                     _id: uuidv4(),
                     createdAt: new Date(),
-                    user: {
-                        __typename: 'User',
-                        username,
-                        firstName,
-                        lastName,
-                        avatar
-                    }
+                    user: this.props.user.me
                 }
             },
             update: (proxy, { data: { createTweet } }) => {
-                const data = proxy.readQuery({ query: GET_TWEETS_QUERY });
+                const data = proxy.readQuery({ query: GET_TWEETS_QUERY, variables: { offset: 0, limit: 10 }});
                 data.getTweets.unshift(createTweet);
-                proxy.writeQuery({ query : GET_TWEETS_QUERY, data })
+                proxy.writeQuery({ query : GET_TWEETS_QUERY, data, variables: { offset: 0, limit: 10 }})
             }
         })
         this.setState({

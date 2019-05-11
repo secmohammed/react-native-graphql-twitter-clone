@@ -22,31 +22,31 @@ class HomeScreen extends Component {
 	}
 	_renderItem = ({ item }) => <FeedCard {...item} />;
 	_renderPlaceholder = () => <FeedCard placeholder isLoaded={this.props.tweets.loading}/>
-	// componentDidMount() {
-	// 	this.props.tweets.subscribeToMore({
-	// 		document: TWEET_ADDED_SUBSCRIPTION,
-	// 		updateQuery: (prev, { subscriptionData }) => {
-	// 			if (!subscriptionData) {
-	// 				return prev;
-	// 			}
-	// 			const newTweet = subscriptionData.data.tweetAdded;
-	// 			if (!prev.getTweets.find(t => t._id === newTweet._id)) {
-	// 				return {
-	// 					...prev,
-	// 					getTweets: [{ ...newTweet }, ...prev.getTweets]
-	// 				};
-	// 			}
-	// 		},
-	// 		onError: err => console.error(err)
-	// 	});
-	// }
+	componentDidMount() {
+		this.props.tweets.subscribeToMore({
+			document: TWEET_ADDED_SUBSCRIPTION,
+			updateQuery: (prev, { subscriptionData }) => {
+				console.log(subscriptionData)
+				if (!subscriptionData) {
+					return prev;
+				}
+				const newTweet = subscriptionData.data.tweetAdded;
+				if (!prev.getTweets.find(t => t._id === newTweet._id)) {
+					return {
+						...prev,
+						getTweets: [{ ...newTweet }, ...prev.getTweets]
+					};
+				}
+			},
+			onError: err => console.error(err)
+		});
+	}
 	_handleLoadMore = () => {
 		this.props.tweets.fetchMore({
 			variables: {
               offset: this.props.tweets.getTweets.length
             },
             updateQuery: (prev, { fetchMoreResult }) => {
-            	console.log(fetchMoreResult)
               if (!fetchMoreResult) return prev;
               return Object.assign({}, prev, {
                 getTweets: [...prev.getTweets, ...fetchMoreResult.getTweets]
@@ -75,7 +75,7 @@ class HomeScreen extends Component {
 					keyExtractor={item => item._id}
 					renderItem={this._renderItem}
 					onEndReached={this._handleLoadMore}
-			         onEndReachedThreshold={0.5}
+			        onEndReachedThreshold={0.5}
 				/>
 			</Root>
 		);
@@ -96,9 +96,9 @@ export default compose(
     graphql(GET_TWEETS_QUERY, {
     	
 		name: "tweets",
-		options: { fetchPolicy: "cache-and-network",variables: {
+		options: { fetchPolicy: "cache-and-network", variables: {
 		 	offset: 0,
-	      	limit: 3
+	      	limit: 10
     	}, }
 	}),
 	connect(

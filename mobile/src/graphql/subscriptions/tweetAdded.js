@@ -1,17 +1,12 @@
 import gql from "graphql-tag";
+import FeedCard from '../../components/FeedCard/FeedCard.js'
+
 export default gql`
 	subscription {
 		tweetAdded {
-			text
-			_id
-			createdAt
-			favoriteCount
-			user {
-				username
-				avatar
-				firstName
-				lastName
-			}
+			...FeedCard
 		}
 	}
+	${FeedCard.fragments.tweet}
+
 `;

@@ -14,7 +14,7 @@ httpServer.listen(constants.PORT, constants.IP_ADDRESS, () => {
 		`🚀 Server ready at http://${constants.IP_ADDRESS}:${constants.PORT}${server.graphqlPath}`
 	);
 	console.log(
-		`🚀 Subscriptions ready at ws://localhost:${constants.PORT}${
+		`🚀 Subscriptions ready at ws://${constants.IP_ADDRESS}:${constants.PORT}${
 			server.subscriptionsPath
 		}`
 	);
