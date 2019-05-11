@@ -35,7 +35,13 @@ export default {
 			throw error;
 		}
 	},
-
+	getUser: (_, { _id }) => {
+		try {
+			return User.findById({ _id })
+		} catch(e) {
+			throw e;
+		}
+	},
 	me: async (_, args, { user }) => {
 		try {
 			return await requireAuth(user);

@@ -26,14 +26,6 @@ const Wrapper = styled.View`
 	justifyContent: center;
 	flex: 1;
 `;
-const BackButton = styled.View`
-	justifyContent: center;
-	alignItems: center;
-	position: absolute;
-	top: 5%;
-	zIndex: 1;
-	left: 5%;
-`;
 const ButtonConfirm = styled(Touchable).attrs({
 	feedback: "opacity"
 })`
@@ -121,9 +113,6 @@ class SigninForm extends Component {
 		}
 		return (
 			<Root onPress={this._onOutsidePress}>
-				<BackButton>
-					<MaterialIcons color={colors.WHITE} size={30} name="arrow-back" />
-				</BackButton>
 				<Wrapper>
 					<InputWrapper>
 						<Input

@@ -31,6 +31,7 @@ export default `
     getTweets(offset: Int, limit: Int): [Tweet]
     getUserTweets: [Tweet]
     me: User
+    getUser(_id: ID!): User
   }
   type Mutation {
     createTweet(text: String!): Tweet

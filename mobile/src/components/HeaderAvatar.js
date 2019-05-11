@@ -25,16 +25,18 @@ class HeaderAvatar extends Component {
 		navigate("Authentication");
 	};
 	_onOpenActionSheet = () => {
-		const options = ["Logout", "Cancel"];
-		const destructiveButtonIndex = 0;
+		const options = ["Profile", "Logout", "Cancel"];
+		const destructiveButtonIndex = 1;
 		this.props.showActionSheetWithOptions(
 			{
 				options,
 				destructiveButtonIndex
 			},
 			async buttonIndex => {
-				if (buttonIndex === 0) {
+				if (buttonIndex === 1) {
 					await this.props.logout();
+				}else if(buttonIndex === 0) {
+					navigate('Profile', { _id: this.props.user.me._id})
 				}
 			}
 		);

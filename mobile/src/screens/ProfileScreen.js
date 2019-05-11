@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components/native";
 import ProfileHeader from '../components/ProfileHeader.js'
-import GET_USER_TWEETS_QUERY from "../graphql/queries/getUserTweets.js";
+import GET_PROFILE_TWEETS_QUERY from "../graphql/queries/profile.js";
 import { graphql } from "react-apollo";
 import Loading from '../components/Loading.js'
 import {  FlatList } from "react-native";
@@ -24,17 +24,17 @@ class ProfileScreen extends Component {
 	_renderItem = ({ item }) => <FeedCard {...item} />;
 
 	render() {
-		const { me, loading } = this.props.user;
+		const { getUser, loading } = this.props.data;
 		if (loading) {
 			return <Loading />;
 		}
-		const tweetCount = me.tweets.length
+		const tweetCount = getUser.tweets.length
 		return (
 			<Root>
-				<ProfileHeader {...me} tweetCount={tweetCount} />
+				<ProfileHeader {...getUser} tweetCount={tweetCount} />
 				<FlatList
 					contentContainerStyle={{ alignSelf: "stretch" }}
-					data={me.tweets}
+					data={getUser.tweets}
 					keyExtractor={item => item._id}
 					renderItem={this._renderItem}
 				/>
@@ -42,4 +42,6 @@ class ProfileScreen extends Component {
 		);
 	}
 }
-export default graphql(GET_USER_TWEETS_QUERY, { name: "user", options: { fetchPolicy: "network-only" } })(ProfileScreen);
+export default graphql(GET_PROFILE_TWEETS_QUERY, {
+ 	options: (props) => ({ variables: { id: props.navigation.getParam('_id') } }) 
+})(ProfileScreen);

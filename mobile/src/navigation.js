@@ -66,15 +66,6 @@ const Tabs = createBottomTabNavigator(
 				)
 			})
 		},
-		Profile: {
-			screen: ProfileScreen,
-			navigationOptions: () => ({
-				headerTitle: "Profile",
-				tabBarIcon: ({ tintColor }) => (
-					<FontAwesome name="user" size={TAB_ICON_SIZE} color={tintColor} />
-				)
-			})
-		}
 	},
 	{
 		lazy: true,
@@ -95,6 +86,12 @@ const Tabs = createBottomTabNavigator(
 export default createAppContainer(
 	createStackNavigator(
 		{
+			Profile: {
+				screen: ProfileScreen,
+				navigationOptions: () => ({
+					headerTitle: "Profile",
+				})
+			},
 			Home: {
 				screen: Tabs,
 				navigationOptions: ({ navigation }) => ({

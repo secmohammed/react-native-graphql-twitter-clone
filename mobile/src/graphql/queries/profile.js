@@ -3,8 +3,8 @@ import FEED_CARD_QUERY from '../fragments/feedcard.js'
 import USER_FRAGMENT_QUERY from '../fragments/user.js'
 
 export default gql`
-    {
-        me {
+    query getUser($id: ID!) {
+        getUser(_id: $id) {
             ...Me
             tweets {
                 ...FeedCard

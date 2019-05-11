@@ -19,7 +19,7 @@ const customFetch = (uri, options) => {
 			}
 			return response;
 		})
-		.catch(err => console.log(err.message));
+		.catch(err => console.log(err));
 };
 
 const httpLink = createHttpLink({
