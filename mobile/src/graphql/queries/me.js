@@ -1,16 +1,10 @@
 import gql from "graphql-tag";
-
+import USER_FRAGMENT_QUERY from '../fragments/user.js'
 export default gql`
 	{
 		me {
-			_id
-			username
-			email
-			firstName
-			lastName
-			avatar
-			createdAt
-			updatedAt
+			...Me
 		}
 	}
+	${USER_FRAGMENT_QUERY}
 `;

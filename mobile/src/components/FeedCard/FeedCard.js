@@ -52,22 +52,4 @@ const FeedCard = (props) =>  {
         </Root>
     );
 }
-FeedCard.fragments = {
-    tweet: gql`
-        fragment FeedCard on Tweet {
-            text
-            _id
-            createdAt
-            isFavorited
-            favoriteCount
-            user {
-                username
-                avatar
-                lastName
-                firstName
-            }
-
-        }
-    `
-}
 export default FeedCard;

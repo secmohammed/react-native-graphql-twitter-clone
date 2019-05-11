@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import FeedCard from '../../components/FeedCard/FeedCard.js'
+import FEED_CARD_QUERY from '../fragments/feedcard.js'
 
 export default gql`
 	subscription {
@@ -7,6 +7,6 @@ export default gql`
 			...FeedCard
 		}
 	}
-	${FeedCard.fragments.tweet}
+    ${FEED_CARD_QUERY}
 
 `;

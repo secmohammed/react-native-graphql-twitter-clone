@@ -1,21 +1,12 @@
 import gql from "graphql-tag";
-import FeedCard from '../../components/FeedCard/FeedCard.js'
+import FEED_CARD_QUERY from '../fragments/feedcard.js'
 
 export default gql`
 	mutation createTweet($text: String!) {
 		createTweet(text: $text) {
-            text
-            _id
-            createdAt
-            isFavorited
-            favoriteCount
-            user {
-                username
-                avatar
-                lastName
-                firstName
-            }
-
+            ...FeedCard
 		}
 	}
+    ${FEED_CARD_QUERY}
+
 `;

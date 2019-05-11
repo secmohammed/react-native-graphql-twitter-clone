@@ -1,21 +1,16 @@
 import gql from "graphql-tag";
-import FeedCard from '../../components/FeedCard/FeedCard.js'
+import FEED_CARD_QUERY from '../fragments/feedcard.js'
+import USER_FRAGMENT_QUERY from '../fragments/user.js'
 
 export default gql`
     {
         me {
-            _id
-            username
-            email
-            firstName
-            lastName
-            avatar
-            createdAt
-            updatedAt
+            ...Me
             tweets {
                 ...FeedCard
             }
         }
     }
-    ${FeedCard.fragments.tweet}
+    ${FEED_CARD_QUERY}
+    ${USER_FRAGMENT_QUERY}
 `;
