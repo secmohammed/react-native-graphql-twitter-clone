@@ -7,7 +7,7 @@ export default {
     follow: async (_, { _id }, { user }) => {
         try {
             await requireAuth(user);
-            await FollowingUser.findOneOrCreate({ user }, async (err, follow) => {
+            await FollowingUser.findOneOrCreate({ user: user._id }, async (err, follow) => {
                 if (!follow.followings.some(f => f.equals(_id))) {
                     follow.followings.push(_id)
                     await follow.save()

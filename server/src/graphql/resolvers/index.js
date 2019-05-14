@@ -13,7 +13,7 @@ export default {
 	User : {
 		tweets: ({ _id }) => Tweet.find({ user: _id }).populate('user').sort({ createdAt: -1 }),
 		followings: async ({ _id }) => { 
-			const followings = await FollowingUser.findOne({ user: _id }).populate('followings') 
+			const followings = await FollowingUser.findOne({ user: _id }).populate('followings')
 			if (followings) {
 				return followings.followings
 			}
@@ -23,6 +23,22 @@ export default {
 			if (followers) {
 				return followers.map(follower => follower.user);
 			}
+		},
+		followingsCount: async ({ _id }) => { 
+			const followings = await FollowingUser.findOne({ user: _id }).populate('followings')
+			if (followings) {
+				return followings.followings.length
+			}
+			return 0;
+		},
+		followersCount: async ({_id}) => {
+			const followers = await FollowingUser.find({ followings: _id }).populate('user').sort({ createdAt: -1 });
+			console.log(followers)
+			if (followers) {
+				return followers.length;
+			}
+			return 0;
+
 		}
 	},
 	Query: {

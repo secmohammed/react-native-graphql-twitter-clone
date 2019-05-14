@@ -20,6 +20,8 @@ export default `
     tweets: [Tweet]!
     followings: [User]!
     followers: [User]!
+    followingsCount: Int!
+    followersCount: Int!
     createdAt: Date!
     updatedAt: Date!
   }
