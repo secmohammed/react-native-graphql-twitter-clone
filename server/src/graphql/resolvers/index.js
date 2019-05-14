@@ -11,9 +11,11 @@ export default {
 	Date: GraphQLDate,
 	User : {
 		tweets: ({ _id }) => Tweet.find({ user: _id }).populate('user').sort({ createdAt: -1 }),
-		followers: async ({ _id }) => { 
-			const followers = await FollowingUser.findOne({ user: _id }).populate('followings') 
-			return followers.followings;
+		followings: async ({ _id }) => { 
+			const followings = await FollowingUser.findOne({ user: _id }).populate('followings') 
+			if (followings) {
+				return followings.followings
+			}
 		}
 	},
 	Query: {

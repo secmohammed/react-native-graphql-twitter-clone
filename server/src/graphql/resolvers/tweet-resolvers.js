@@ -1,6 +1,7 @@
 import Tweet from "../../Models/Tweet";
 import User from "../../Models/User";
 import FavoriteTweet from "../../Models/FavoriteTweet";
+import FollowingUser from "../../Models/FollowingUser";
 import { requireAuth } from "../../services/auth";
 
 const TWEET_ADDED = "TWEET_ADDED";
@@ -16,8 +17,12 @@ export default {
 	getTweets: async (_, { offset, limit}, { user, pubsub }) => {
 		try {
 			await requireAuth(user);
-
-			const p1 = Tweet.find({}).limit(limit).skip(offset).populate('user').sort({ createdAt: -1 });
+			const { followings } = await FollowingUser.findOne({ user: user._id });
+			const p1 = Tweet.find({
+				user: {
+					$in: followings
+				}
+			}).limit(limit).skip(offset).populate('user').sort({ createdAt: -1 });
 			const p2 = FavoriteTweet.findOne({ user: user._id });
 			const [tweets, favorites] = await Promise.all([p1, p2]);
 			return tweets.reduce((arr, tweet) => {

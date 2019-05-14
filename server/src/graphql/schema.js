@@ -18,7 +18,7 @@ export default `
     lastName: String
     avatar: String
     tweets: [Tweet]!
-    followers: [User]!
+    followings: [User]!
     createdAt: Date!
     updatedAt: Date!
   }
