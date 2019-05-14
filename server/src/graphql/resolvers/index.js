@@ -2,13 +2,19 @@ import GraphQLDate from "graphql-date";
 
 import TweetResolvers from "./tweet-resolvers";
 import UserResolvers from "./user-resolvers";
+import FollowResolver from "./follow-resolvers";
 import User from "../../Models/User";
 import Tweet from "../../Models/Tweet";
+import FollowingUser from "../../Models/FollowingUser";
 
 export default {
 	Date: GraphQLDate,
 	User : {
-		tweets: ({ _id }) => Tweet.find({ user: _id }).populate('user').sort({ createdAt: -1 })
+		tweets: ({ _id }) => Tweet.find({ user: _id }).populate('user').sort({ createdAt: -1 }),
+		followers: async ({ _id }) => { 
+			const followers = await FollowingUser.findOne({ user: _id }).populate('followings') 
+			return followers.followings;
+		}
 	},
 	Query: {
 		getTweet: TweetResolvers.getTweet,
@@ -23,7 +29,9 @@ export default {
 		deleteTweet: TweetResolvers.deleteTweet,
 		favoriteTweet: TweetResolvers.favoriteTweet,
 		signup: UserResolvers.signup,
-		signin: UserResolvers.signin
+		signin: UserResolvers.signin,
+		follow: FollowResolver.follow,
+		unfollow: FollowResolver.unfollow
 	},
 	Subscription: {
 		tweetAdded: TweetResolvers.tweetAdded

@@ -1,5 +1,6 @@
 import User from "../../Models/User";
 import FavoriteTweet from '../../Models/FavoriteTweet.js'
+import FollowingUser from '../../Models/FollowingUser.js'
 import { requireAuth } from "../../services/auth";
 
 export default {
@@ -8,6 +9,7 @@ export default {
 			const [firstName, ...lastName] = fullName.split(" ");
 			// fix lastName.
 			const user = await User.create({ firstName, ...rest });
+
 			return {
 				token: user.createToken()
 			};

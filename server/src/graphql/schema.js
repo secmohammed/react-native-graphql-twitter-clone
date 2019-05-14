@@ -6,6 +6,10 @@ export default `
   type Auth {
     token: String!
   }
+  type Follow {
+    user: ID!
+    followings: [User]!
+  }
   type User {
     _id: ID!
     username: String
@@ -14,6 +18,7 @@ export default `
     lastName: String
     avatar: String
     tweets: [Tweet]!
+    followers: [User]!
     createdAt: Date!
     updatedAt: Date!
   }
@@ -40,6 +45,8 @@ export default `
     favoriteTweet(_id: ID!): Tweet
     signup(email: String!, fullName: String!, password: String!, avatar: String, username: String): Auth
     signin(email: String!, password: String!): Auth!
+    follow(_id: ID!): User!
+    unfollow(_id: ID!): User!
   }
   type Subscription {
     tweetAdded: Tweet!

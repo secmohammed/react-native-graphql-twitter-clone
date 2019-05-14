@@ -27,8 +27,6 @@ export default {
 						...tw,
 						isFavorited: true
 					});
-					pubsub.publish(TWEET_ADDED, { [TWEET_ADDED]: { ...tweet } });
-
 				} else {
 
 					arr.push({
