@@ -6,9 +6,9 @@ export default `
   type Auth {
     token: String!
   }
-  type Follow {
-    user: ID!
-    followings: [User]!
+  type Search {
+    users: [User]
+    tweets: [Tweet]
   }
   type User {
     _id: ID!
@@ -37,6 +37,7 @@ export default `
     getUserTweets: [Tweet]
     me: User
     getUser(_id: ID!): User
+    search(text: String!): Search
   }
   type Mutation {
     createTweet(text: String!): Tweet

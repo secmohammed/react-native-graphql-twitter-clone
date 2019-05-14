@@ -2,7 +2,8 @@ import GraphQLDate from "graphql-date";
 
 import TweetResolvers from "./tweet-resolvers";
 import UserResolvers from "./user-resolvers";
-import FollowResolver from "./follow-resolvers";
+import FollowResolvers from "./follow-resolvers";
+import SearchResolvers from "./search-resolvers";
 import User from "../../Models/User";
 import Tweet from "../../Models/Tweet";
 import FollowingUser from "../../Models/FollowingUser";
@@ -23,7 +24,8 @@ export default {
 		getTweets: TweetResolvers.getTweets,
 		getUserTweets: TweetResolvers.getUserTweets,
 		me: UserResolvers.me,
-		getUser: UserResolvers.getUser
+		getUser: UserResolvers.getUser,
+		search: SearchResolvers.search
 	},
 	Mutation: {
 		createTweet: TweetResolvers.createTweet,
@@ -32,8 +34,8 @@ export default {
 		favoriteTweet: TweetResolvers.favoriteTweet,
 		signup: UserResolvers.signup,
 		signin: UserResolvers.signin,
-		follow: FollowResolver.follow,
-		unfollow: FollowResolver.unfollow
+		follow: FollowResolvers.follow,
+		unfollow: FollowResolvers.unfollow
 	},
 	Subscription: {
 		tweetAdded: TweetResolvers.tweetAdded

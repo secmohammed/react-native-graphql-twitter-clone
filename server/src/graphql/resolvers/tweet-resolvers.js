@@ -14,20 +14,31 @@ export default {
 			throw error;
 		}
 	},
-	getTweets: async (_, { offset, limit}, { user, pubsub }) => {
+	getTweets: async (_, { offset, limit }, { user, pubsub }) => {
 		try {
 			await requireAuth(user);
+
 			const followings = await FollowingUser.findOne({ user: user._id });
 			if (!followings) {
-				throw new Error('The people you are following, have not posted anything yet.')
+				throw new Error(
+					"The people you are following, have not posted anything yet."
+				);
 			}
+
 			const p1 = Tweet.find({
 				user: {
 					$in: followings.followings
 				}
-			}).limit(limit).skip(offset).populate('user').sort({ createdAt: -1 });
+			})
+				.limit(limit)
+				.skip(offset)
+				.populate("user")
+				.sort({ createdAt: -1 });
+
 			const p2 = FavoriteTweet.findOne({ user: user._id });
+
 			const [tweets, favorites] = await Promise.all([p1, p2]);
+
 			return tweets.reduce((arr, tweet) => {
 				const tw = tweet.toJSON();
 				if (favorites.tweets.some(t => t.equals(tweet._id))) {
@@ -36,7 +47,6 @@ export default {
 						isFavorited: true
 					});
 				} else {
-
 					arr.push({
 						...tw,
 						isFavorited: false
@@ -60,8 +70,11 @@ export default {
 		try {
 			await requireAuth(user);
 			let tweet = await Tweet.create({ ...args, user: user._id });
-			tweet = await tweet.populate('user').execPopulate()
-			pubsub.publish('tweetAdded', { tweetAdded: { ...tweet } });
+
+			tweet = await tweet.populate("user").execPopulate();
+			
+			pubsub.publish("tweetAdded", { tweetAdded: { ...tweet } });
+			
 			return tweet;
 		} catch (error) {
 			throw error;
@@ -70,6 +83,7 @@ export default {
 	updateTweet: async (_, { _id, ...rest }, { user }) => {
 		try {
 			await requireAuth(user);
+
 			const tweet = await Tweet.findOne({ _id, user: user._id });
 
 			if (!tweet) {
@@ -88,11 +102,14 @@ export default {
 	favoriteTweet: async (_, { _id }, { user }) => {
 		try {
 			await requireAuth(user);
+			
 			const favorites = await FavoriteTweet.findOne({ user: user._id });
+			
 			if (!favorites) {
 				let favoriteTweet = new FavoriteTweet({
 					user: user._id
-				})
+				});
+			
 				favoriteTweet.tweets.push(_id);
 				await favoriteTweet.save();
 				const tweet = await Tweet.incFavoriteCount(_id);
@@ -101,7 +118,6 @@ export default {
 					isFavorited: true,
 					...tweet.toJSON()
 				};
-
 			}
 			if (favorites.tweets.some(t => t.equals(_id))) {
 				favorites.tweets.pull(_id);
@@ -128,12 +144,15 @@ export default {
 	deleteTweet: async (_, { _id }, { user }) => {
 		try {
 			await requireAuth(user);
+
 			const tweet = await Tweet.findOne({ _id, user: user._id });
 
 			if (!tweet) {
 				throw new Error("Not found!");
 			}
+
 			await tweet.remove();
+
 			return {
 				message: "Delete Success!"
 			};
@@ -142,6 +161,6 @@ export default {
 		}
 	},
 	tweetAdded: {
-		subscribe: (_, __, { pubsub }) => pubsub.asyncIterator('tweetAdded')
+		subscribe: (_, __, { pubsub }) => pubsub.asyncIterator("tweetAdded")
 	}
 };
