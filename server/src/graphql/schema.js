@@ -19,6 +19,7 @@ export default `
     avatar: String
     tweets: [Tweet]!
     followings: [User]!
+    followers: [User]!
     createdAt: Date!
     updatedAt: Date!
   }

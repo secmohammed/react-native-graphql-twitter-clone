@@ -17,6 +17,12 @@ export default {
 			if (followings) {
 				return followings.followings
 			}
+		},
+		followers: async ({ _id }) => {
+			const followers = await FollowingUser.find({ followings: _id }).populate('user').sort({ createdAt: -1 });
+			if (followers) {
+				return followers.map(follower => follower.user);
+			}
 		}
 	},
 	Query: {
