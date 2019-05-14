@@ -17,10 +17,13 @@ export default {
 	getTweets: async (_, { offset, limit}, { user, pubsub }) => {
 		try {
 			await requireAuth(user);
-			const { followings } = await FollowingUser.findOne({ user: user._id });
+			const followings = await FollowingUser.findOne({ user: user._id });
+			if (!followings) {
+				throw new Error('The people you are following, have not posted anything yet.')
+			}
 			const p1 = Tweet.find({
 				user: {
-					$in: followings
+					$in: followings.followings
 				}
 			}).limit(limit).skip(offset).populate('user').sort({ createdAt: -1 });
 			const p2 = FavoriteTweet.findOne({ user: user._id });
