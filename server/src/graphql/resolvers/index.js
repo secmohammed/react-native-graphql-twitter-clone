@@ -33,7 +33,6 @@ export default {
 		},
 		followersCount: async ({_id}) => {
 			const followers = await FollowingUser.find({ followings: _id }).populate('user').sort({ createdAt: -1 });
-			console.log(followers)
 			if (followers) {
 				return followers.length;
 			}

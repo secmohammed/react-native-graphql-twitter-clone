@@ -6,6 +6,8 @@ export default gql`
     query getUser($id: ID!) {
         getUser(_id: $id) {
             ...Me
+            followersCount
+            followingsCount
             tweets {
                 ...FeedCard
             }

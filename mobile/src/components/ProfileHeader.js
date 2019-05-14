@@ -75,6 +75,12 @@ const ProfileHeader = (props) => {
                 <MetaText><MetaTextNumber> {props.tweetCount}</MetaTextNumber> tweets </MetaText>
             </MetaBox>
             <MetaBox>
+                <MetaText><MetaTextNumber> {props.followersCount}</MetaTextNumber> followers </MetaText>
+            </MetaBox>
+            <MetaBox>
+                <MetaText><MetaTextNumber> {props.followingsCount}</MetaTextNumber> followings </MetaText>
+            </MetaBox>
+            <MetaBox>
                 <MetaText><MetaTextNumber> 3</MetaTextNumber> likes </MetaText>
             </MetaBox>
         </MetaContainer>
