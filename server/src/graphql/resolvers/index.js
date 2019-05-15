@@ -4,7 +4,9 @@ import TweetResolvers from "./tweet-resolvers";
 import UserResolvers from "./user-resolvers";
 import FollowResolvers from "./follow-resolvers";
 import SearchResolvers from "./search-resolvers";
+import CommentResolvers from "./comment-resolvers";
 import User from "../../Models/User";
+import Comment from "../../Models/Comment";
 import Tweet from "../../Models/Tweet";
 import FollowingUser from "../../Models/FollowingUser";
 
@@ -46,7 +48,8 @@ export default {
 		getUserTweets: TweetResolvers.getUserTweets,
 		me: UserResolvers.me,
 		getUser: UserResolvers.getUser,
-		search: SearchResolvers.search
+		search: SearchResolvers.search,
+		getComments: CommentResolvers.comments
 	},
 	Mutation: {
 		createTweet: TweetResolvers.createTweet,
@@ -56,7 +59,9 @@ export default {
 		signup: UserResolvers.signup,
 		signin: UserResolvers.signin,
 		follow: FollowResolvers.follow,
-		unfollow: FollowResolvers.unfollow
+		unfollow: FollowResolvers.unfollow,
+		createComment: CommentResolvers.createComment,
+		updateComment: CommentResolvers.updateComment
 	},
 	Subscription: {
 		tweetAdded: TweetResolvers.tweetAdded

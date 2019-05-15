@@ -6,6 +6,20 @@ export default `
   type Auth {
     token: String!
   }
+  type Reply {
+    _id: ID!
+    body: String!
+    user: User!
+    tweet: Tweet!
+    comment: Comment!    
+  }
+  type Comment {
+    _id: ID!
+    body: String!
+    user: User!
+    tweet: Tweet!
+    replies: [Reply]!
+  }
   type Search {
     users: [User]
     tweets: [Tweet]
@@ -41,6 +55,7 @@ export default `
     me: User
     getUser(_id: ID!): User
     search(text: String!): Search
+    getComments(tweet: ID!): Comment
   }
   type Mutation {
     createTweet(text: String!): Tweet
@@ -51,6 +66,8 @@ export default `
     signin(email: String!, password: String!): Auth!
     follow(_id: ID!): User!
     unfollow(_id: ID!): User!
+    createComment(body: String!, tweet: ID!): Comment
+    updateComment(body: String!, tweet: ID!, comment: ID!, reply: ID): Comment
   }
   type Subscription {
     tweetAdded: Tweet!
