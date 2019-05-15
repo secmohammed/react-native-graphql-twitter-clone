@@ -27,7 +27,7 @@ const httpLink = createHttpLink({
 	fetch: customFetch
 });
 
-const wsClient = new SubscriptionClient("ws://localhost:3000/graphql", {
+const wsClient = new SubscriptionClient("ws://192.168.1.2:3000/graphql", {
 	reconnect: true,
 	connectionParams: {}
 });

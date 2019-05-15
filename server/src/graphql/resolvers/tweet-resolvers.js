@@ -69,11 +69,9 @@ export default {
 	createTweet: async (_, args, { user, pubsub }) => {
 		try {
 			await requireAuth(user);
-			let tweet = await Tweet.create({ ...args, user: user._id });
-
-			tweet = await tweet.populate("user").execPopulate();
-			
-			pubsub.publish("tweetAdded", { tweetAdded: { ...tweet } });
+	      	const tweet = await Tweet.create({ ...args, user: user._id });
+	      	const tweetForPublishing = await Tweet.findById(tweet._id).populate('user')
+			pubsub.publish(TWEET_ADDED, { tweetAdded: tweetForPublishing });
 			
 			return tweet;
 		} catch (error) {
@@ -161,6 +159,6 @@ export default {
 		}
 	},
 	tweetAdded: {
-		subscribe: (_, __, { pubsub }) => pubsub.asyncIterator("tweetAdded")
+		subscribe: (_, __, { pubsub }) => pubsub.asyncIterator([TWEET_ADDED])
 	}
 };

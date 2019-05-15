@@ -4,7 +4,7 @@ import { ApolloServer } from "apollo-server-express";
 import graphql from "graphql";
 import cors from "cors";
 import { createServer } from "http";
-import { PubSub } from "graphql-subscriptions";
+import { RedisPubSub } from 'graphql-redis-subscriptions';
 import { makeExecutableSchema } from 'graphql-tools'
 import typeDefs from "../graphql/schema";
 import resolvers from "../graphql/resolvers";
@@ -28,7 +28,8 @@ const server = new ApolloServer({
 		req,
 		res,
 		user: req.user,
-		pubsub: new PubSub()
+		pubsub: new RedisPubSub()
+
 	})
 });
 

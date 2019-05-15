@@ -12,6 +12,14 @@ import FollowingUser from "../../Models/FollowingUser";
 
 export default {
 	Date: GraphQLDate,
+	Tweet: {
+		user: ({ user }) => {
+			if (typeof user == Object) {
+				return user;
+			}
+			return User.findById(user);
+		}
+	},
 	User : {
 		tweets: ({ _id }) => Tweet.find({ user: _id }).populate('user').sort({ createdAt: -1 }),
 		followings: async ({ _id }) => { 
